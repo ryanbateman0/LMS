@@ -12,26 +12,26 @@ import com.ss.lms.models.Publisher;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DaoManagerTest {
-	
+
 	public Book[] books;
 	public Author[] authors;
 	public Publisher[] publishers;
 	public DaoManager man;
-	
+
 	@Before
 	public void startUp() {
 		man = new DaoManager();
 		books = new Book[10];
-		books[0] = new Book(0,"Book1",0,0);
-		books[1] = new Book(1,"Book2",0,0);
-		books[2] = new Book(2,"Book3",4,4);
-		books[3] = new Book(3,"Book4",3,6);
-		books[4] = new Book(4,"Book5",6,8);
-		books[5] = new Book(5,"Book6",8,3);
-		books[6] = new Book(6,"Book7",3,2);
-		books[7] = new Book(7,"Book8",4,8);
-		books[8] = new Book(8,"Book9",1,6);
-		books[9] = new Book(9,"Book10",6,6);
+		books[0] = new Book(0, "Book1", 0, 0);
+		books[1] = new Book(1, "Book2", 0, 0);
+		books[2] = new Book(2, "Book3", 4, 4);
+		books[3] = new Book(3, "Book4", 3, 6);
+		books[4] = new Book(4, "Book5", 6, 8);
+		books[5] = new Book(5, "Book6", 8, 3);
+		books[6] = new Book(6, "Book7", 3, 2);
+		books[7] = new Book(7, "Book8", 4, 8);
+		books[8] = new Book(8, "Book9", 1, 6);
+		books[9] = new Book(9, "Book10", 6, 6);
 		authors = new Author[10];
 		authors[0] = new Author(0, "Author1");
 		authors[1] = new Author(1, "Author2");
@@ -58,37 +58,41 @@ public class DaoManagerTest {
 
 	@Test
 	public void testCreateAuthorTable() {
-		for(Author author: authors) {
+		for (Author author : authors) {
 			man.CreateAuthor(author);
 		}
 	}
 
 	@Test
 	public void testCreatePublisherTable() {
-		for(Publisher publisher: publishers) {
+		for (Publisher publisher : publishers) {
 			man.CreatePublisher(publisher);
 		}
 	}
-	
+
 	@Test
 	public void testCreatezBookTable() {
-		for(Book book: books) {
+		for (Book book : books) {
 			man.CreateBook(book);
 		}
 	}
-	
+
 	@Test
 	public void testReadBook() {
-		System.out.println(man.ReadBook(new Book(1,null,null,null)));
-		System.out.println(man.ReadBook(new Book(null,"Book4",null,null)));
-		System.out.println(man.ReadBook(new Book(null,null,3,null)));
-		System.out.println(man.ReadBook(new Book(null,null,null,6)));
+		assertEquals(man.ReadBook(new Book(1, null, null, null)), "Found books:\n1/Book2/0/0");
+		assertEquals(man.ReadBook(new Book(null, "Book4", null, null)),
+				"Found books:\n3/Book4/3/6");
+		assertEquals(man.ReadBook(new Book(null, null, 3, null)),
+				"Found books:\n3/Book4/3/6\n6/Book7/3/2");
+		assertEquals(man.ReadBook(new Book(null, null, null, 6)),
+				"Found books:\n3/Book4/3/6\n8/Book9/1/6\n9/Book10/6/6");
 	}
 
 	@Test
 	public void testReadAuthor() {
 		fail("Not yet implemented");
 	}
+
 	@Test
 	public void testReadPublisher() {
 		fail("Not yet implemented");
@@ -96,7 +100,8 @@ public class DaoManagerTest {
 
 	@Test
 	public void testUpdateBook() {
-		System.out.println(man.UpdateBook(new Book(5,null,null,null), new Book(null,"New Book",1,1)));
+		System.out.println(man.UpdateBook(new Book(5, null, null, null), new Book(null, "New Book",
+				1, 1)));
 	}
 
 	@Test
@@ -111,12 +116,12 @@ public class DaoManagerTest {
 
 	@Test
 	public void testzDeleteBook() {
-		man.DeleteBook(new Book(null,"New Book",null,null));
+		man.DeleteBook(new Book(null, "New Book", null, null));
 	}
 
 	@Test
 	public void testzDeleteAuthor() {
-		man.DeleteAuthor(new Author(3,null));
+		man.DeleteAuthor(new Author(3, null));
 	}
 
 	@Test
